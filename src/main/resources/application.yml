@@ -1,0 +1,34 @@
+# Copyright 2024 European Commission
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+spring:
+  application:
+    name: Registration Certificate Signer
+  config:
+    import: file:.env[.properties]
+
+server:
+  port: 8086
+  error:
+    include-message: always
+
+logging:
+  level:
+    org.hibernate: ERROR
+    org.springframework.web: INFO
+
+timestamp-authority:
+  certificate-path: ${TIMESTAMP_AUTHORITY_CERTIFICATE_FILEPATH} # Filepath to the Timestamp Authority certificate
+  server-url: ${TIMESTAMP_AUTHORITY_URL} # Timestamp Authority URL
+  supported-digest-algorithm: ${TIMESTAMP_AUTHORITY_SUPPORTED_DIGEST_ALGS} # List of the digest algorithms supported by the Timestamp Authority
