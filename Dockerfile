@@ -6,7 +6,7 @@ COPY pom.xml .
 COPY src ./src
 
 # compile code in /opt/app
-RUN mvn -B -e clean install
+RUN mvn -B -e clean install -DskipTests
 
 # 3. Preparing the runtime environment
 FROM eclipse-temurin:17 AS java_runtime

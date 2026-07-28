@@ -15,8 +15,8 @@
 spring:
   application:
     name: Registration Certificate Signer
-  config:
-    import: file:.env[.properties]
+  #config:
+  #  import: file:.env[.properties]
 
 server:
   port: 8086
