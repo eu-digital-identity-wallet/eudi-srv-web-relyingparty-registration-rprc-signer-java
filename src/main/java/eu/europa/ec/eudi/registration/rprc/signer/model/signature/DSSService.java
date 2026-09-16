@@ -339,6 +339,7 @@ public class DSSService {
 				break;
 			case CBAdES:
 				CBAdESSignatureParameters cbadesParameters = new CBAdESSignatureParameters();
+				cbadesParameters.setSignatureType("rc-wrp+cwt");
 				parameters = cbadesParameters;
 				break;
 			default:
