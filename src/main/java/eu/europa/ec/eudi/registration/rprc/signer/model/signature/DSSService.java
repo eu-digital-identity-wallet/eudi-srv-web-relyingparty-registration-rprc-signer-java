@@ -28,6 +28,9 @@ import eu.europa.esig.dss.asic.cades.ASiCWithCAdESTimestampParameters;
 import eu.europa.esig.dss.asic.cades.signature.ASiCWithCAdESService;
 import eu.europa.esig.dss.asic.xades.ASiCWithXAdESSignatureParameters;
 import eu.europa.esig.dss.asic.xades.signature.ASiCWithXAdESService;
+import eu.europa.esig.dss.cbades.signature.CBAdESService;
+import eu.europa.esig.dss.cbades.signature.CBAdESSignatureParameters;
+import eu.europa.esig.dss.cbades.signature.CBAdESTimestampParameters;
 import eu.europa.esig.dss.enumerations.*;
 import eu.europa.esig.dss.model.*;
 import eu.europa.esig.dss.model.x509.CertificateToken;
@@ -170,6 +173,7 @@ public class DSSService {
 	private static String getSignatureLevelFromSignatureFormatAndConformanceLevel(String conformance_level, String signature_format) throws DocumentSignDocParameterInvalidException {
 		String prefix = switch (signature_format) {
 			case "J" -> "JAdES_BASELINE_";
+			case "CB" -> "CB_AdES_BASELINE_";
 			default -> {
 				logger.error("Signature Format in request is invalid.");
 				throw new DocumentSignDocParameterInvalidException("The signature format received is invalid.", "signature_format");
@@ -191,6 +195,7 @@ public class DSSService {
 	private static SignatureForm getSignatureForm(String signature_format) throws DocumentSignDocParameterInvalidException {
 		return switch (signature_format) {
 			case "J" -> SignatureForm.JAdES;
+			case "CB" -> SignatureForm.CBAdES;
 			default -> {
 				logger.error("signature_format is an invalid value.");
 				throw new DocumentSignDocParameterInvalidException("The signature_format received is invalid", "signature_format");
@@ -251,6 +256,7 @@ public class DSSService {
 		} else {
 			service = switch (signatureForm) {
 				case JAdES -> new JAdESService(cv);
+				case CBAdES -> new CBAdESService(cv);
 				default -> {
 					logger.error(String.format("The signature format %s is not supported", signatureForm));
 					throw new UnsupportedSignatureFormatException(String.format("The signature format %s is not supported", signatureForm));
@@ -331,6 +337,10 @@ public class DSSService {
 				jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 				parameters = jadesParameters;
 				break;
+			case CBAdES:
+				CBAdESSignatureParameters cbadesParameters = new CBAdESSignatureParameters();
+				parameters = cbadesParameters;
+				break;
 			default:
 				logger.error("Unknown signature format : {}", signatureForm);
 				throw new UnsupportedSignatureFormatException(String.format("Unknown signature format : %s", signatureForm));
@@ -400,6 +410,7 @@ public class DSSService {
 		if (containerType == null) {
 			parameters = switch (signatureForm) {
 				case JAdES -> new JAdESTimestampParameters();
+				case CBAdES -> new CBAdESTimestampParameters();
 				default -> {
 					logger.error(String.format("Signature format selected for a time-stamp (%s) is not supported.", signatureForm));
 					throw new UnsupportedSignatureFormatException(

@@ -146,6 +146,8 @@ public class SignatureService {
             docSigned.setMimeType(MimeType.fromMimeTypeString("application/jose"));
         } else if (document.getSignature_format().equals("X")) {
             docSigned.setMimeType(MimeType.fromMimeTypeString("text/xml"));
+        } else if (document.getSignature_format().equals("CB")) {
+            docSigned.setMimeType(MimeType.fromMimeTypeString("application/cbor"));    
         } else {
             docSigned.setMimeType(MimeType.fromMimeTypeString("application/pdf"));
         }
