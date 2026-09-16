@@ -30,7 +30,7 @@ public class DocumentsSignDocRequest {
     private String document_name;
     @Schema(description = "The digital signature format to use when signing the document.", required = true)
     @NotBlank(message = "Signature format cannot be blank")
-    @Pattern(regexp = "J", message = "Invalid signature format")
+    @Pattern(regexp = "(J|CB)", message = "Invalid signature format")
     private String signature_format = null;
     @Schema(description = "The signature conformance level. The default level is AdES-B-B.", required = true)
     @Pattern(regexp = "Ades-B-B|Ades-B-T|Ades-B-LT|Ades-B-LTA|Ades-B|Ades-T|Ades-LT|Ades-LTA",
