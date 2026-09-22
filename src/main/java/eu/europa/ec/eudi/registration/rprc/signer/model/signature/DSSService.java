@@ -56,7 +56,6 @@ import eu.europa.esig.dss.spi.validation.RevocationDataVerifier;
 
 import java.security.cert.X509Certificate;
 import java.util.*;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -97,9 +96,28 @@ public class DSSService {
 
 		DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.getTrustedCertificates());
 		logger.info("Successfully created the DocumentSignatureService");
+		
+		AbstractSignatureParameters parameters;
 
-        AbstractSignatureParameters parameters = fillParameters(form);
-		logger.info("Successfully set up SignatureParameters");
+		String type = document.getType();
+		logger.info(type);
+		if (type != null && !type.isEmpty() && form.getSignatureForm() == SignatureForm.JAdES) {
+			logger.info("Entrou");
+			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
+			// jadesParameters.setIncludeKeyIdentifier(false);
+			jadesParameters.setSignatureType(type);
+			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
+			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
+			parameters = jadesParameters;
+			fillParameters(parameters, form);
+			logger.info("Successfully set up SignatureParameters");
+
+		}
+		else {
+			logger.info("Entrou no else");
+			parameters = fillParameters(form);
+			logger.info("Successfully set up SignatureParameters");
+		}
 
         ToBeSigned toBeSigned;
 		toBeSigned = service.getDataToSign(form.getDocumentToSign(), parameters);
@@ -116,9 +134,28 @@ public class DSSService {
 
 		DocumentSignatureService service = getSignatureService(form.getContainerType(), form.getSignatureForm(), form.getTrustedCertificates());
 		logger.info("Successfully created the DocumentSignatureService");
+		
 
-		AbstractSignatureParameters parameters = fillParameters(form);
-		logger.info("Successfully set up SignatureParameters");
+		AbstractSignatureParameters parameters;
+		String type = document.getType();
+		logger.info(type);
+		if (type != null && !type.isEmpty() && form.getSignatureForm() == SignatureForm.JAdES) {
+			logger.info("Entrou");
+			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
+			// jadesParameters.setIncludeKeyIdentifier(false);
+			jadesParameters.setSignatureType(type);
+			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
+			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
+			parameters = jadesParameters;
+			fillParameters(parameters, form);
+			logger.info("Successfully set up SignatureParameters");
+
+		}
+		else {
+			logger.info("Entrou no else");
+			parameters = fillParameters(form);
+			logger.info("Successfully set up SignatureParameters");
+		}
 
         SignatureValue signatureValue = new SignatureValue();
         signatureValue.setAlgorithm(SignatureAlgorithm.getAlgorithm(form.getEncryptionAlgorithm(), form.getDigestAlgorithm()));

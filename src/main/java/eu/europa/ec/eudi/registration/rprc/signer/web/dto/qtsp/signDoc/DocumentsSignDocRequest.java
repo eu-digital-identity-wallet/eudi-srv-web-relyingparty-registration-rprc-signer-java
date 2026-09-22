@@ -45,6 +45,8 @@ public class DocumentsSignDocRequest {
     @Schema(description = "Specifies the signature container type. The default container is 'No'")
     @Pattern(regexp = "No|ASiC-E|ASiC-S", message = "Invalid container value")
     private String container = "No";
+    @Schema(description = "Specifies the signature type. The default type is 'rc-wrp+jwt'")
+    private String type;
 
     public String getDocument() {
         return document;
@@ -100,6 +102,14 @@ public class DocumentsSignDocRequest {
 
     public void setContainer(String container) {
         this.container = container;
+    }
+
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
     }
 
 
