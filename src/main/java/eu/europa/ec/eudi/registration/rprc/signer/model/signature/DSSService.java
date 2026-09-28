@@ -144,6 +144,7 @@ public class DSSService {
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
+			jadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -152,7 +153,6 @@ public class DSSService {
 
 		}
 		else {
-			logger.info("Entrou no else");
 			parameters = fillParameters(form);
 			logger.info("Successfully set up SignatureParameters");
 		}
@@ -370,13 +370,17 @@ public class DSSService {
 				JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 				// jadesParameters.setIncludeKeyIdentifier(false);
 				jadesParameters.setSignatureType("rc-wrp+jwt");
+				jadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
 				jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 				jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 				parameters = jadesParameters;
 				break;
 			case CBAdES:
 				CBAdESSignatureParameters cbadesParameters = new CBAdESSignatureParameters();
-				cbadesParameters.setSignatureType("rc-wrp+cwt");
+				cbadesParameters.setSignatureType("rc-wrp+cwt");// to use by default
+				cbadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
+				cbadesParameters.setTagged(true);
+				cbadesParameters.setCoseStructureType(COSEStructureType.COSE_SIGN);
 				parameters = cbadesParameters;
 				break;
 			default:
