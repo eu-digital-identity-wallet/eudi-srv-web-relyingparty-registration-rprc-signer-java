@@ -100,12 +100,14 @@ public class DSSService {
 		AbstractSignatureParameters parameters;
 
 		String type = document.getType();
-		logger.info(type);
+		//logger.info(type);
 		if (type != null && !type.isEmpty() && form.getSignatureForm() == SignatureForm.JAdES) {
-			logger.info("Entrou");
+
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
+			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
+			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -114,7 +116,7 @@ public class DSSService {
 
 		}
 		else {
-			logger.info("Entrou no else");
+
 			parameters = fillParameters(form);
 			logger.info("Successfully set up SignatureParameters");
 		}
@@ -138,13 +140,13 @@ public class DSSService {
 
 		AbstractSignatureParameters parameters;
 		String type = document.getType();
-		logger.info(type);
+		//logger.info(type);
 		if (type != null && !type.isEmpty() && form.getSignatureForm() == SignatureForm.JAdES) {
-			logger.info("Entrou");
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
-			jadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
+			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
+			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -189,8 +191,8 @@ public class DSSService {
 		SignatureForm signatureFormat = getSignatureForm(document.getSignature_format());
 		signatureDocumentForm.setSignatureForm(signatureFormat);
 
-		DigestAlgorithm digestAlgorithm = getDigestAlgorithmFromOID(hashAlgorithmOID);
-		signatureDocumentForm.setDigestAlgorithm(digestAlgorithm);
+		//DigestAlgorithm digestAlgorithm = getDigestAlgorithmFromOID(hashAlgorithmOID);
+		signatureDocumentForm.setDigestAlgorithm(DigestAlgorithm.SHA256);
 
 		signatureDocumentForm.setCertificate(certificate);
 		signatureDocumentForm.setCertChain(certificateChain);
