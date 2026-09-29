@@ -106,8 +106,8 @@ public class DSSService {
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
-			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
-			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
+			//jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
+			//jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -145,8 +145,8 @@ public class DSSService {
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
-			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
-			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
+			//jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
+			//jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
