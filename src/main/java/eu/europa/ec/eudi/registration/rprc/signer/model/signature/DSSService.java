@@ -102,12 +102,10 @@ public class DSSService {
 		String type = document.getType();
 		//logger.info(type);
 		if (type != null && !type.isEmpty() && form.getSignatureForm() == SignatureForm.JAdES) {
-
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
-			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
-			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
+			jadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -145,8 +143,7 @@ public class DSSService {
 			JAdESSignatureParameters jadesParameters = new JAdESSignatureParameters();
 			// jadesParameters.setIncludeKeyIdentifier(false);
 			jadesParameters.setSignatureType(type);
-			jadesParameters.setDigestAlgorithm(DigestAlgorithm.SHA256);
-			jadesParameters.setReferenceDigestAlgorithm(DigestAlgorithm.SHA256);
+			jadesParameters.setSigningCertificateDigestMethod(DigestAlgorithm.SHA256);
 			jadesParameters.setJwsSerializationType(JWSSerializationType.JSON_SERIALIZATION);
 			jadesParameters.setSigDMechanism(SigDMechanism.OBJECT_ID_BY_URI_HASH); // to use by default
 			parameters = jadesParameters;
@@ -191,8 +188,8 @@ public class DSSService {
 		SignatureForm signatureFormat = getSignatureForm(document.getSignature_format());
 		signatureDocumentForm.setSignatureForm(signatureFormat);
 
-		//DigestAlgorithm digestAlgorithm = getDigestAlgorithmFromOID(hashAlgorithmOID);
-		signatureDocumentForm.setDigestAlgorithm(DigestAlgorithm.SHA256);
+		DigestAlgorithm digestAlgorithm = getDigestAlgorithmFromOID(hashAlgorithmOID);
+		signatureDocumentForm.setDigestAlgorithm(digestAlgorithm);
 
 		signatureDocumentForm.setCertificate(certificate);
 		signatureDocumentForm.setCertChain(certificateChain);
