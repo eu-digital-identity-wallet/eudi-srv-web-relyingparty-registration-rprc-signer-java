@@ -1,0 +1,12 @@
+services:
+  registration_rc_signer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: registration_rc_signer
+    ports:
+      - "8086:8086"
+    env_file:
+      - .env
+    volumes:
+      - {host_path_to_certificate}:{container_path_to_certificate}
